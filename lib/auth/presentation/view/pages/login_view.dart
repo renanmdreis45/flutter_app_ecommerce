@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_ecommerce/auth/presentation/view/widgets/login_header_widget.dart';
+import 'package:flutter_app_ecommerce/auth/presentation/view/widgets/login_input_fields.dart';
 import 'package:flutter_app_ecommerce/authentication/presentation/view/widgets/login_header_widget.dart';
 import 'package:flutter_app_ecommerce/authentication/presentation/view/widgets/login_input_fields.dart';
 
@@ -24,7 +26,7 @@ class _LoginViewState extends State<LoginView> {
         child: Column(
           children: [
             buildLoginHeader('assets/login_header.png'),
-            buildLoginInputFields(),
+            buildLoginInputFields()
           ],
         ),
       ),
