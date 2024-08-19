@@ -31,7 +31,7 @@ class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
   }) async {
     try {
       final response =
-          await _client.post(Uri.parse('$kBaseUrl$kCreateUserEndpoint'),
+          await _client.post(Uri.parse('$kBaseApiUrl$kCreateUserEndpoint'),
               body: jsonEncode({
                 'createdAt': createdAt,
                 'name': name,
@@ -51,7 +51,7 @@ class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
   @override
   Future<List<UserModel>> getUsers() async {
     final response = await _client.get(
-      Uri.http(kBaseUrl, kGetUsersEndpoint),
+      Uri.http(kBaseApiUrl, kGetUsersEndpoint),
     );
     return List<DataMap>.from(jsonDecode(response.body) as List)
         .map((userData) => UserModel.fromMap(userData))
