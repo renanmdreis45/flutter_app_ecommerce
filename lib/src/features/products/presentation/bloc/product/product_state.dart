@@ -1,67 +1,28 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_app_ecommerce/src/features/products/domain/entities/product.dart';
+part of 'product_bloc.dart';
 
 abstract class ProductState extends Equatable {
-  const ProductState();
-}
-
-class ProductInitial extends ProductState {
   @override
   List<Object> get props => [];
 }
 
-class ProductLoading extends ProductState {
-  final bool? isLoading;
+class ProductsInitial extends ProductState {}
 
-  ProductLoading({this.isLoading});
+class ProductsLoading extends ProductState {}
 
-  @override
-  List<Object?> get props => [this.isLoading];
-}
+class ProductsLoaded extends ProductState {
+  final List<Product> products;
 
-class ProductDone extends ProductState {
-  final Product? product;
-
-  ProductDone({this.product});
+  ProductsLoaded({required this.products});
 
   @override
-  List<Object?> get props => [this.product];
+  List<Object> get props => [products];
 }
 
 class ProductError extends ProductState {
-  final String? message;
+  final String message;
 
-  ProductError(this.message);
-
-  @override
-  List<Object?> get props => [this.message];
-}
-
-class ProductsListLoading extends ProductState {
-  final bool? isLoading;
-
-  ProductsListLoading({this.isLoading});
+  ProductError({required this.message});
 
   @override
-  List<Object?> get props => [this.isLoading];
-}
-
-class ProductsListDone extends ProductState {
-  final List<Product>? products;
-
-  ProductsListDone({
-    this.products,
-  });
-
-  @override
-  List<Object?> get props => [this.products];
-}
-
-class ProductsListError extends ProductState {
-  final String? message;
-
-  ProductsListError({this.message});
-
-  @override
-  List<Object?> get props => [this.message];
+  List<Object> get props => [message];
 }

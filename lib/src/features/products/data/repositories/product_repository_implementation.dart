@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_app_ecommerce/core/errors/exceptions.dart';
 import 'package:flutter_app_ecommerce/core/errors/failure.dart';
 import 'package:flutter_app_ecommerce/core/utils/typedef.dart';
-import 'package:flutter_app_ecommerce/src/features/products/data/datasources/product_remote_data_source.dart';
+import 'package:flutter_app_ecommerce/src/features/products/data/datasources/remote/product_remote_data_source.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/entities/product.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/repositories/product_repository.dart';
 
