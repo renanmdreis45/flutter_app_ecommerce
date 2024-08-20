@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/entities/cart.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/cart/cart_controller.dart';
@@ -30,7 +30,7 @@ class _CartScreenState extends State<CartScreen> {
         centerTitle: true,
         title: const Text('Ecommerce'),
         actions: [
-          Badge(
+          badges.Badge(
             badgeContent: Consumer<CartController>(
               builder: (context, value, child) {
                 return Text(
@@ -40,7 +40,7 @@ class _CartScreenState extends State<CartScreen> {
                 );
               },
             ),
-            position: const BadgePosition(start: 30, bottom: 30),
+            position: badges.BadgePosition.bottomStart(start: 30, bottom: 30),
             child: IconButton(
               onPressed: () {},
               icon: const Icon(Icons.shopping_cart),
@@ -298,11 +298,11 @@ class ReusableWidget extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.subtitle1,
+            style: TextStyle(color: Colors.white),
           ),
           Text(
             value.toString(),
-            style: Theme.of(context).textTheme.subtitle2,
+            style: TextStyle(color: Colors.white)
           ),
         ],
       ),

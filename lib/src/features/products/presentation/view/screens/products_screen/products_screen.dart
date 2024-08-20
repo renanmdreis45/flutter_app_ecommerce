@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/bloc/product/product_bloc.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/cart/cart_controller.dart';
@@ -24,7 +24,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         centerTitle: true,
         title: const Text('Product List'),
         actions: [
-          Badge(
+          badges.Badge(
             badgeContent: Consumer<CartController>(
               builder: (context, value, child) {
                 return Text(
@@ -34,7 +34,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 );
               },
             ),
-            position: const BadgePosition(start: 30, bottom: 30),
+            position: badges.BadgePosition.bottomStart(start: 30, bottom: 30),
             child: IconButton(
               onPressed: () {
                 Navigator.push(

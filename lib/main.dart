@@ -9,7 +9,7 @@ void main() {
   final injector = Injector();
   injector.initializeDependencies();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
