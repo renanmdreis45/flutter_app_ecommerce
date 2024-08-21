@@ -9,17 +9,26 @@ class ProductsList extends StatelessWidget {
   final List<Product> products;
   final CartController cartController;
 
-  void saveData(
-      int index) async {
-    await cartController.insertCart(
-      Cart(id: index.toString(), productId: products[index].id, name: products[index].name, description: products[index].description, category: products[index].category, image: products[index].image, price: int.parse(products[index].price), quantity: ValueNotifier(1), material: products[index].material, departament: products[index].departament)
-    ).then((value) {
-        cartController.addTotalPrice(int.parse(products[index].price).toDouble());
-        cartController.addCounter();
-        print('Product Added to cart');
-      }).onError((error, stackTrace) {
-        print(error.toString());
-      });
+  void saveData(int index) async {
+    await cartController
+        .insertCart(Cart(
+            id: index.toString(),
+            productId: products[index].id,
+            name: products[index].name,
+            description: products[index].description,
+            category: products[index].category,
+            image: products[index].image,
+            price: int.parse(products[index].price),
+            quantity: ValueNotifier(1),
+            material: products[index].material,
+            departament: products[index].departament))
+        .then((value) {
+      cartController.addTotalPrice(int.parse(products[index].price).toDouble());
+      cartController.addCounter();
+      print('Product Added to cart');
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
   }
 
   @override
@@ -29,6 +38,7 @@ class ProductsList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: products.length,
         itemBuilder: (context, index) {
+          print(products[index].image);
           return Card(
             color: Colors.blueGrey.shade200,
             elevation: 5.0,
@@ -38,11 +48,12 @@ class ProductsList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Image(
-                    height: 80,
-                    width: 80,
-                    image: AssetImage(products[index].image.toString()),
-                  ),
+                  // products[index].image.isNotEmpty ?
+                  // Image(
+                  //   height: 80,
+                  //   width: 80,
+                  //   image: NetworkImage(products[index].image.toString()),
+                  // ) : const SizedBox(),
                   SizedBox(
                     width: 130,
                     child: Column(

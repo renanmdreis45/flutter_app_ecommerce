@@ -1,8 +1,8 @@
-import 'package:flutter_app_ecommerce/src/features/products/domain/entities/cart.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
 import 'dart:io' as io;
+import 'package:flutter_app_ecommerce/src/features/products/domain/entities/cart.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
 abstract class CartLocalDataSource {
   Future<Cart> insertCart(Cart cart);
@@ -12,9 +12,9 @@ abstract class CartLocalDataSource {
 }
 
 class CartLocalDataSourceImpl implements CartLocalDataSource {
-  CartLocalDataSourceImpl(this._database);
-
   Database? _database;
+
+  CartLocalDataSourceImpl(this._database);
 
   Future<Database?> get database async {
     if (_database != null) {
@@ -25,40 +25,33 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
   }
 
   initDatabase() async {
-    io.Directory directory = await getApplicationDocumentsDirectory();
-    String path = join(directory.path, 'cart.db');
-    var db = await openDatabase(path, version: 1, onCreate: _onCreate);
+    var db = await initDatabase();
     return db;
   }
 
   _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE cart(id INTEGER PRIMARY KEY, productId VARCHAR UNIQUE, name TEXT, description TEXT, category TEXT, image TEXT, price INTEGER, quantity INTEGER, material TEXT, department TEXT)');
+        'CREATE TABLE cart(id INTEGER PRIMARY KEY, productId VARCHAR UNIQUE, productName TEXT, initialPrice INTEGER, productPrice INTEGER, quantity INTEGER, unitTag TEXT, image TEXT)');
   }
 
   Future<Cart> insertCart(Cart cart) async {
-    var dbClient = await database;
-    await dbClient!.insert('cart', cart.toMap());
+    await _database!.insert('cart', cart.toMap());
     return cart;
   }
 
   Future<List<Cart>> getCardList() async {
-    var dbClient = await database;
     final List<Map<String, Object?>> queryResult =
-        await dbClient!.query('cart');
+        await _database!.query('cart');
 
     return queryResult.map((result) => Cart.fromMap(result)).toList();
   }
 
   Future<int> updateQuantity(Cart cart) async {
-    var dbClient = await database;
-
-    return await dbClient!.update('cart', cart.quantityMap(),
+    return await _database!.update('cart', cart.quantityMap(),
         where: "productId = ?", whereArgs: [cart.productId]);
   }
 
   Future<int> deleteCartItem(int id) async {
-    var dbClient = await database;
-    return await dbClient!.delete('cart', where: 'id = ?', whereArgs: [id]);
+    return await _database!.delete('cart', where: 'id = ?', whereArgs: [id]);
   }
 }

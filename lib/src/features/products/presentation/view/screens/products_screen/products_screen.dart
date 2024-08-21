@@ -1,10 +1,9 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
-import 'package:flutter_app_ecommerce/src/features/products/presentation/bloc/product/product_bloc.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/cart/cart_controller.dart';
+import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/product/product_controller.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/view/screens/cart_screen/cart_screen.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/view/widgets/products_list.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class ProductsScreen extends StatefulWidget {
@@ -15,9 +14,22 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
+  var cartController;
+  var productController;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      productController = Provider.of<ProductController>(context, listen: false)
+          .onFetchProducts();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartController>(context);
+    productController = Provider.of<ProductController>(context);
+    cartController = Provider.of<CartController>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +40,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             badgeContent: Consumer<CartController>(
               builder: (context, value, child) {
                 return Text(
-                  value.getCounter().toString(),
+                  cartController.getCounter().toString(),
                   style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 );
@@ -50,18 +62,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ),
         ],
       ),
-      body: BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
-        if (state is ProductsLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is ProductsLoaded) {
-          return ProductsList(
-              products: state.products , cartController: cart);
-        } else {
-          return const Center(child: Text('Estamos com problema ao retornar os produtos. Tente novamente depois'),);
-        }
-      }),
+      body: ProductsList(
+          products: productController.products!,
+          cartController: cartController),
     );
   }
 }

@@ -15,6 +15,7 @@ class ProductRepositoryImplementation implements ProductRepository {
   ResultFuture<List<Product>> getProducts() async {
     try {
       final result = await _remoteDataSource.getProducts();
+      print(result);
       return Right(result);
     } on APIException catch (e) {
       return Left(ApiFailure.fromException(e));

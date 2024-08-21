@@ -22,8 +22,12 @@ class CartController with ChangeNotifier {
 
   List<Cart> cart = [];
 
-  CartController(this.getCartList, this.updateQuantity, this.deleteCartItem,
-      this.insertCart);
+  CartController({
+    required this.getCartList,
+    required this.updateQuantity,
+    required this.deleteCartItem,
+    required this.insertCart,
+  });
 
   Future<List<Cart>> getData() async {
     cart = (await getCartList()) as List<Cart>;

@@ -12,7 +12,7 @@ abstract class ProductRemoteDataSource {
   Future<Product> getProductById({required String id});
 }
 
-const kGetProductsEndpoint = '/brazilian_provider';
+const kGetProductsEndpoint = '/devnology/brazilian_provider';
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   const ProductRemoteDataSourceImpl(this._client);
@@ -23,7 +23,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts() async {
     final response =
         await _client.get(Uri.http(kBaseProductsUrl, kGetProductsEndpoint));
-
+    print(response);
     return List<DataMap>.from(jsonDecode(response.body))
         .map((userData) => ProductModel.fromMap(userData))
         .toList();

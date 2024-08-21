@@ -15,11 +15,13 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   List<bool> tapped = [];
+  var cartController;
 
   @override
   void initState() {
     super.initState();
-    context.read<CartController>().getData();
+    cartController = Provider.of<CartController>(context, listen: false);
+    cartController.getData();
   }
 
   @override
@@ -80,8 +82,7 @@ class _CartScreenState extends State<CartScreen> {
                                 Image(
                                   height: 80,
                                   width: 80,
-                                  image:
-                                      AssetImage(provider.cart[index].image),
+                                  image: AssetImage(provider.cart[index].image),
                                 ),
                                 SizedBox(
                                   width: 130,
@@ -197,7 +198,8 @@ class _CartScreenState extends State<CartScreen> {
                                       cart.deleteCartItem(
                                           int.parse(provider.cart[index].id));
 
-                                      provider.removeItem(int.parse(provider.cart[index].id));
+                                      provider.removeItem(
+                                          int.parse(provider.cart[index].id));
                                       provider.removeCounter();
                                     },
                                     icon: Icon(
@@ -217,9 +219,8 @@ class _CartScreenState extends State<CartScreen> {
             builder: (BuildContext context, value, Widget? child) {
               final ValueNotifier<int?> totalPrice = ValueNotifier(null);
               for (var element in value.cart) {
-                totalPrice.value =
-                    (element.price * element.quantity!.value) +
-                        (totalPrice.value ?? 0);
+                totalPrice.value = (element.price * element.quantity!.value) +
+                    (totalPrice.value ?? 0);
               }
               return Column(
                 children: [
@@ -300,10 +301,7 @@ class ReusableWidget extends StatelessWidget {
             title,
             style: TextStyle(color: Colors.white),
           ),
-          Text(
-            value.toString(),
-            style: TextStyle(color: Colors.white)
-          ),
+          Text(value.toString(), style: TextStyle(color: Colors.white)),
         ],
       ),
     );
