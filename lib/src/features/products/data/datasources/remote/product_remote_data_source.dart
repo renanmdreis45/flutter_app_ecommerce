@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_app_ecommerce/core/constants/constants.dart';
+import 'package:flutter_app_ecommerce/core/utils/constants.dart';
 import 'package:flutter_app_ecommerce/core/utils/typedef.dart';
 import 'package:flutter_app_ecommerce/src/features/products/data/models/product_model.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/entities/product.dart';

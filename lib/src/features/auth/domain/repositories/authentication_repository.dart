@@ -4,7 +4,12 @@ import 'package:flutter_app_ecommerce/src/features/auth/domain/entities/user.dar
 abstract class AuthenticationRepository {
   const AuthenticationRepository();
 
-  ResultVoid createUser({required String createdAt, required String name});
+  ResultVoid createUser({required String email, required String name, required String password});
 
   ResultFuture<List<User>> getUsers();
+
+  ResultFuture<User> signIn({
+    required String email,
+    required String password,
+  });
 }

@@ -9,6 +9,8 @@ class CartScreen extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+    static const routeName = '/cart';
+
   @override
   State<CartScreen> createState() => _CartScreenState();
 }

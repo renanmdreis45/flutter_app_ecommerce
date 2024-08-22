@@ -6,7 +6,7 @@ import 'package:flutter_app_ecommerce/src/features/auth/domain/entities/user.dar
 class UserModel extends User {
   const UserModel({
     required super.id,
-    required super.createdAt,
+    required super.email,
     required super.name,
   });
 
@@ -16,7 +16,7 @@ class UserModel extends User {
   UserModel.fromMap(DataMap map)
       : this(
           id: map['id'] as String,
-          createdAt: map['createdAt'] as String,
+          email: map['email'] as String,
           name: map['name'] as String,
         );
 
@@ -25,12 +25,13 @@ class UserModel extends User {
     String? createdAt,
     String? name,
   }) {
-    return UserModel(id: id ?? this.id, createdAt: createdAt ?? this.createdAt, name: name ?? this.name);
+    return UserModel(id: id ?? this.id, email: email, name: name ?? this.name);
   }
 
   DataMap toMap() => {
         'id': id,
-        'createdAt': createdAt,
+        'email': email,
         'name': name,
       };
+      
 }

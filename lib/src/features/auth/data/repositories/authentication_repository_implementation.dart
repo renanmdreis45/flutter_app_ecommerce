@@ -14,11 +14,12 @@ class AuthenticationRepositoryImplementation
 
   @override
   ResultVoid createUser({
-    required String createdAt,
+    required String email,
     required String name,
+    required String password,
   }) async {
     try {
-      await _remoteDataSource.createUser(createdAt: createdAt, name: name);
+      await _remoteDataSource.createUser(email: email, name: name, password: password);
       return const Right(null);
     } on APIException catch (e) {
       return Left(ApiFailure(message: e.message, statusCode: e.statusCode));
@@ -29,6 +30,19 @@ class AuthenticationRepositoryImplementation
   ResultFuture<List<User>> getUsers() async {
     try {
       final result = await _remoteDataSource.getUsers();
+      return Right(result);
+    } on APIException catch (e) {
+      return Left(ApiFailure.fromException(e));
+    }
+  }
+
+  ResultFuture<User> signIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final result = await _remoteDataSource.signIn(email: email, password: password);
+
       return Right(result);
     } on APIException catch (e) {
       return Left(ApiFailure.fromException(e));

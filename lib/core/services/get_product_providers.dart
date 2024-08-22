@@ -12,7 +12,6 @@ import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/cart
 import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/product/get_products.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/cart/cart_controller.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/product/product_controller.dart';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
