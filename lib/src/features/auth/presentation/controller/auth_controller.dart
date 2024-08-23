@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_ecommerce/src/features/auth/domain/entities/user.dart';
 import 'package:flutter_app_ecommerce/src/features/auth/domain/usecases/create_user.dart';
 import 'package:flutter_app_ecommerce/src/features/auth/domain/usecases/get_users.dart';
 import 'package:flutter_app_ecommerce/src/features/auth/domain/usecases/sign_in.dart';
@@ -19,6 +20,8 @@ class AuthController extends ChangeNotifier {
   final CreateUser createUser;
   final SignIn signIn;
 
+  User currentUser = const User.empty();
+  String errorMessage = "";
   bool isLogged = false;
 
   final prefs = GetIt.instance<SharedPreferences>();
@@ -26,8 +29,11 @@ class AuthController extends ChangeNotifier {
   Future<void> signInHandler(String email, String password) async {
     final result = await signIn(SignInParams(email: email, password: password));
 
-    result.fold((failure) => null, (user) async {
+    result.fold((failure) {
+      errorMessage = failure.message;
+    }, (user) async {
       isLogged = true;
+      currentUser = user;
       await prefs.setString("user", jsonEncode(user));
       await prefs.setBool('isLogged', true);
     });

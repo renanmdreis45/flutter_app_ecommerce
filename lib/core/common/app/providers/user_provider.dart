@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_ecommerce/src/features/auth/data/models/user_model.dart';
+import 'package:flutter_app_ecommerce/src/features/auth/domain/entities/user.dart';
 
 class UserProvider extends ChangeNotifier {
-  UserModel? _user;
+  User? _user;
 
-  UserModel? get user => _user;
+  User? get user => _user;
 
-  void initUser(UserModel? user) {
+  void initUser(User? user) {
     if (_user != user) _user = user;
   }
 
-  set user(UserModel user) {
+  set user(User? user) {
     if (_user != user) {
       _user = user;
       Future.delayed(Duration.zero, () => notifyListeners());

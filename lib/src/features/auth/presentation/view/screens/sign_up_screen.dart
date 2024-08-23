@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
-  static const routeName = '/login';
+  static const routeName = '/signup';
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -12,7 +11,9 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final emailController = TextEditingController();
+  final fullnameController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {

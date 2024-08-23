@@ -7,10 +7,13 @@ import 'package:flutter_app_ecommerce/src/features/auth/domain/usecases/sign_in.
 import 'package:flutter_app_ecommerce/src/features/auth/presentation/controller/auth_controller.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initAuth() async {
+  final prefs = await SharedPreferences.getInstance();
+
   sl
     ..registerFactory(
         () => AuthController(getUsers: sl(), createUser: sl(), signIn: sl()))
@@ -21,5 +24,6 @@ Future<void> initAuth() async {
         () => AuthenticationRepositoryImplementation(sl()))
     ..registerLazySingleton<AuthenticationRemoteDataSource>(
         () => AuthRemoteDataSrcImpl(sl()))
-    ..registerLazySingleton(() => http.Client());
+    ..registerLazySingleton(() => http.Client())
+    ..registerLazySingleton(() => prefs);
 }

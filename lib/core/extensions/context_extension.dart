@@ -6,5 +6,5 @@ import 'package:provider/provider.dart';
 extension ContextExt on BuildContext {
   UserProvider get userProvider => read<UserProvider>();
 
-  User? get currentUser = userProvider.user;
+  User? get currentUser => userProvider.user;
 }
