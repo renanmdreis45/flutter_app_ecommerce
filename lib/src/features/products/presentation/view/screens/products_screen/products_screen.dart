@@ -26,7 +26,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      productController = Provider.of<ProductController>(context, listen: false)
+      productController = Provider.of<ProductController>(context, listen: true)
           .onFetchProducts();
       providers = await getProviders();
     });
@@ -34,8 +34,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    productController = Provider.of<ProductController>(context);
-    cartController = Provider.of<CartController>(context, listen: false);
+    productController = Provider.of<ProductController>(context, listen: true);
+    cartController = Provider.of<CartController>(context, listen: true);
 
     return MultiProvider(
       providers: providers,
@@ -72,7 +72,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
         ),
         body: ProductsList(
             products: productController.products!,
-            cartController: cartController),
+            cartController: cartController,
+            productController: productController,),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app_ecommerce/src/features/auth/domain/entities/user.dart';
 import 'package:flutter_app_ecommerce/src/features/auth/domain/repositories/authentication_repository.dart';
-import 'package:flutter_app_ecommerce/src/features/auth/domain/usecases/create_user.dart';
 import 'package:flutter_app_ecommerce/src/features/auth/domain/usecases/get_users.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

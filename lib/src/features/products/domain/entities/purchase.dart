@@ -1,58 +1,49 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
-class Cart extends Equatable {
-  const Cart({
-    required this.id,
+class Purchase extends Equatable {
+  const Purchase({
     required this.productId,
     required this.name,
     required this.description,
     required this.category,
-    required this.image,
     required this.price,
     required this.quantity,
     required this.material,
     required this.departament,
   });
 
-  final String id;
   final String productId;
   final String name;
   final String description;
   final String category;
-  final String image;
-  final int price;
-  final ValueNotifier<int>? quantity;
+  final String price;
+  final int quantity;
   final String material;
   final String departament;
 
   @override
-  List<Object> get props => [id, productId, name, description, category, image, price, ValueNotifier(quantity), material, departament];
+  List<Object> get props => [productId, name, description, category, price, quantity, material, departament];
 
-  factory Cart.fromMap(Map<String, dynamic> data) {
-    return Cart(
-        id: data['id'],
-        productId: data['productId'],
+  factory Purchase.fromMap(Map<String, dynamic> data) {
+    return Purchase(
+        productId: data['id'],
         name: data['nome'],
         description: data['descricao'],
         category: data['categoria'],
-        image: data['imagem'],
         price: data['preco'],
-        quantity: ValueNotifier(data['quantity']),
+        quantity: data['quantity'],
         material: data['material'],
         departament: data['departamento']);
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'productId': productId,
       'name': name,
       'description': description,
       'category': category,
-      'image': image,
       'price': price,
-      'quantity': quantity?.value,
+      'quantity': quantity,
       'material': material,
       'departament': departament,
     };
@@ -61,7 +52,7 @@ class Cart extends Equatable {
   Map<String, dynamic> quantityMap() {
     return {
       'productId': productId,
-      'quantity': quantity!.value,
+      'quantity': quantity,
     };
   }
 }

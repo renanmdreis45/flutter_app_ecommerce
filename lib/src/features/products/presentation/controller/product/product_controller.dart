@@ -11,7 +11,7 @@ class ProductController with ChangeNotifier {
 
   Future<void> onFetchProducts() async {
     final result = await getProducts.call();
-    
+
     result.fold(
       (failure) {
         print("Falha ao carregar produtos: $failure");
@@ -21,5 +21,14 @@ class ProductController with ChangeNotifier {
         notifyListeners();
       },
     );
+  }
+
+  void filterProductsByQuery(String query) {
+    List<Product> newProducts = products!
+        .where((element) => element.name.contains(query.trim()))
+        .toList();
+
+    products = newProducts;
+    notifyListeners();
   }
 }
