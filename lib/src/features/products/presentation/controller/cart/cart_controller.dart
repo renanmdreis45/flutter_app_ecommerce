@@ -30,7 +30,13 @@ class CartController with ChangeNotifier {
   });
 
   Future<List<Cart>> getData() async {
-    cart = (await getCartList()) as List<Cart>;
+    final result = await getCartList();
+
+    result.fold((failure) {
+      print("Falha ao retornar os produtos do carrinho: $failure");
+    }, (cartList) {
+      cart = cartList;
+    });
     notifyListeners();
     return cart;
   }

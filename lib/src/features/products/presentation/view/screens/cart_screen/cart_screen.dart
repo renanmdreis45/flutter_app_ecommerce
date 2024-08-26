@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
+import 'package:flutter_app_ecommerce/core/res/colours.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/entities/cart.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/cart/cart_controller.dart';
 import 'package:provider/provider.dart';
@@ -79,11 +80,11 @@ class _CartScreenState extends State<CartScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Image(
-                                  height: 80,
-                                  width: 80,
-                                  image: AssetImage(provider.cart[index].image),
-                                ),
+                                // Image(
+                                //   height: 80,
+                                //   width: 80,
+                                //   image: AssetImage(provider.cart[index].image),
+                                // ),
                                 SizedBox(
                                   width: 130,
                                   child: Column(
@@ -236,17 +237,17 @@ class _CartScreenState extends State<CartScreen> {
         onTap: () {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Payment Successful'),
+              content: Text('Payment Successful!'),
               duration: Duration(seconds: 2),
             ),
           );
         },
         child: Container(
-          color: Colors.yellow.shade600,
+          color: Colours.primaryColour,
           alignment: Alignment.center,
           height: 50.0,
           child: const Text(
-            'Proceed to Pay',
+            'Buy',
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.bold,

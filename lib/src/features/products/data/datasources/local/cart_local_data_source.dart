@@ -47,7 +47,7 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
     var dbClient = await database;
     final List<Map<String, Object?>> queryResult =
         await dbClient!.query('cart');
-
+    print(queryResult);
     return queryResult.map((result) => Cart.fromMap(result)).toList();
   }
 

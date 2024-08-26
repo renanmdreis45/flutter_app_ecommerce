@@ -78,13 +78,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           settings: settings);
     case CartScreen.routeName:
       return _pageBuilder(
-          (_) => MultiProvider(
-                providers: [
-                  ChangeNotifierProvider(
-                    create: (_) => sl<ProductController>(),
-                  ),
-                  ChangeNotifierProvider(create: (_) => sl<CartController>())
-                ],
+          (_) => ChangeNotifierProvider(create: (_) => sl<CartController>(),
                 child: const CartScreen(),
               ),
           settings: settings);

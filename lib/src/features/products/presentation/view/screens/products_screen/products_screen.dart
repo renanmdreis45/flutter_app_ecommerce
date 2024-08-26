@@ -51,10 +51,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             position: badges.BadgePosition.bottomStart(start: 30, bottom: 30),
             child: IconButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CartScreen()));
+                Navigator.pushReplacementNamed(context, CartScreen.routeName);
               },
               icon: const Icon(Icons.shopping_cart),
             ),

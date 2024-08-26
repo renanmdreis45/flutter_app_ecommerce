@@ -31,16 +31,16 @@ class Cart extends Equatable {
 
   factory Cart.fromMap(Map<String, dynamic> data) {
     return Cart(
-        id: data['id'],
+        id: data['id'].toString(),
         productId: data['productId'],
-        name: data['nome'],
-        description: data['descricao'],
-        category: data['categoria'],
-        image: data['imagem'],
-        price: data['preco'],
+        name: data['name'],
+        description: data['description'],
+        category: data['category'],
+        image: "",
+        price: double.parse(data['price']),
         quantity: data['quantity'],
         material: data['material'],
-        departament: data['departamento']);
+        departament: data['departament']);
   }
 
   Map<String, dynamic> toMap() {
