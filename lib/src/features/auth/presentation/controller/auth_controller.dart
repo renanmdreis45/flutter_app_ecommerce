@@ -23,18 +23,21 @@ class AuthController extends ChangeNotifier {
   User currentUser = const User.empty();
   String errorMessage = "";
   bool isLogged = false;
+  bool signUp = false;
 
   final prefs = GetIt.instance<SharedPreferences>();
 
   Future<void> signInHandler(String email, String password) async {
     final result = await signIn(SignInParams(email: email, password: password));
-
+    
     result.fold((failure) {
       errorMessage = failure.message;
     }, (user) async {
       isLogged = true;
+      signUp = false;
       currentUser = user;
-      await prefs.setString("user", jsonEncode(user));
+
+      await prefs.setString("user", user);
       await prefs.setBool('isLogged', true);
     });
 
@@ -45,8 +48,10 @@ class AuthController extends ChangeNotifier {
     final result = await createUser(
         CreateUserParams(email: email, name: name, password: password));
 
-    result.fold((failure) => Error(),
-        (_) => print("The user was created successfully!"));
+    result.fold((failure) => Error(), (_) {
+      signUp = true;
+      isLogged = false;
+    });
 
     Future.delayed(Duration.zero, () => notifyListeners());
   }

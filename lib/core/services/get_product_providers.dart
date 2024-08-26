@@ -1,3 +1,4 @@
+import 'package:flutter_app_ecommerce/core/common/app/providers/user_provider.dart';
 import 'package:flutter_app_ecommerce/core/database/database.dart';
 import 'package:flutter_app_ecommerce/src/features/products/data/datasources/local/cart_local_data_source.dart';
 import 'package:flutter_app_ecommerce/src/features/products/data/datasources/remote/product_remote_data_source.dart';
@@ -63,6 +64,8 @@ Future<List<SingleChildWidget>> getProviders() async {
             getCartList: context.read<GetCartList>(),
             updateQuantity: context.read<UpdateQuantity>(),
             deleteCartItem: context.read<DeleteCartItem>(),
-            insertCart: context.read<InsertCart>()))
+            insertCart: context.read<InsertCart>())),
+    
+    ChangeNotifierProvider(create: (_) => UserProvider()),
   ];
 }

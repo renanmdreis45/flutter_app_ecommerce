@@ -22,9 +22,9 @@ abstract class AuthenticationRemoteDataSource {
   });
 }
 
-const kCreateUserEndpoint = '/user';
+const kCreateUserEndpoint = '/signup';
 const kGetUsersEndpoint = '/users';
-const kSignInEndpoint = '/signin';
+const kSignInEndpoint = '/login';
 
 class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
   const AuthRemoteDataSrcImpl(this._client);
@@ -38,13 +38,15 @@ class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
     required String password,
   }) async {
     try {
-      final response =
-          await _client.post(Uri.parse('$kBaseApiUrl$kCreateUserEndpoint'),
-              body: jsonEncode({
-                'email': email,
-                'name': name,
-                'password': password,
-              }));
+      final url = '$kBaseApiUrl$kCreateUserEndpoint';
+
+      final response = await _client.post(Uri.parse(url),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(<String, String>{
+            'name': name,
+            'email': email,
+            'password': password,
+          }));
 
       if (response.statusCode != 200 && response.statusCode != 201) {
         throw APIException(
@@ -60,6 +62,7 @@ class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
   @override
   Future<List<UserModel>> getUsers() async {
     final response = await _client.get(
+      headers: {"Content-Type": "application/json"},
       Uri.http(kBaseApiUrl, kGetUsersEndpoint),
     );
     return List<DataMap>.from(jsonDecode(response.body) as List)
@@ -73,34 +76,31 @@ class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
     required String password,
   }) async {
     try {
-      final result =
-          await _client.post(Uri.parse('$kBaseApiUrl$kSignInEndpoint'),
-              body: jsonEncode({
-                'email': email,
-                'password': password,
-              }));
+      print(email);
+      print(password);
 
-      final user = UserModel.fromJson(result.body);
+      final url = '$kBaseApiUrl$kSignInEndpoint';
 
-      if (user == null) {
-        throw const APIException(
-            message: "Please try again later", statusCode: 505);
-      }
+      final result = await _client.post(Uri.parse(url),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(<String, String>{
+            'email': email,
+            'password': password,
+          })) as dynamic;
 
-      var userData = await _getUserData(user.id);
+      var jsonResponse = jsonDecode(result.body);
 
-      return userData;
+      final user = jsonResponse['user'];
 
+      // if (user) {
+      //   throw const APIException(
+      //       message: "Please try again later", statusCode: 505);
+      // }
+      return UserModel.fromMap(user);
     } on APIException {
       rethrow;
     } catch (e) {
       throw APIException(message: e.toString(), statusCode: 505);
     }
-  }
-
-  Future<UserModel> _getUserData(String uid) async {
-    final result =
-        await _client.get(Uri.http(kBaseApiUrl, '$kGetUsersEndpoint/$uid'));
-    return UserModel.fromJson(result.body);
   }
 }

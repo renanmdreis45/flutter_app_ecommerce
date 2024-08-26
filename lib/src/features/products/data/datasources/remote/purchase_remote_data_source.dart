@@ -54,7 +54,7 @@ class PurchaseRemoteDataSourceImpl implements PurchaseRemoteDataSource {
                 'departament': departament,
               }));
 
-      print('Compra realizada: ${response}');
+      print('Compra realizada: $response');
 
       if (response.statusCode != 200 && response.statusCode != 201) {
         throw APIException(
