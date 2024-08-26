@@ -19,19 +19,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
   switch (settings.name) {
     case '/':
-      final prefs = sl<SharedPreferences>();
+      // final prefs = sl<SharedPreferences>();
       return _pageBuilder(
         (context) {
-          if (prefs.getBool("isLogged")  != true) {
-            final userPref = sl<SharedPreferences>().getString("user");
-            if (userPref != null && userPref.isNotEmpty) {
-              try {
-                print(userPref);
-                final userMap = jsonDecode(userPref);
-                context.userProvider.initUser(userMap);
-              } catch (e) {
-                print('Error decoding user JSON: $e');
-              }
+          // if (prefs.getBool("isLogged")  != true) {
+          //   final userPref = sl<SharedPreferences>().getString("user");
+          //   if (userPref != null && userPref.isNotEmpty) {
+          //     try {
+          //       print(userPref);
+          //       final userMap = jsonDecode(userPref);
+          //       context.userProvider.initUser(userMap);
+          //     } catch (e) {
+          //       print('Error decoding user JSON: $e');
+          //     }
               return MultiProvider(
                 providers: [
                   ChangeNotifierProvider(
@@ -39,14 +39,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                   ),
                   ChangeNotifierProvider(create: (_) => sl<CartController>())
                 ],
-                child: const ProductsScreen(),
+               child: const ProductsScreen(),
               );
-            }
-          }
-          return ChangeNotifierProvider(
-            create: (_) => sl<AuthController>(),
-            child: const LoginScreen(),
-          );
+            // }
+          // } 
+          // return ChangeNotifierProvider(
+          //   create: (_) => sl<AuthController>(),
+          //   child: const LoginScreen(),
+          // );
         },
         settings: settings,
       );

@@ -12,7 +12,7 @@ Future<Database> initDatabase() async {
     version: 1,
     onCreate: (db, version) async {
       await db.execute(
-        'CREATE TABLE cart(id INTEGER PRIMARY KEY, productId VARCHAR UNIQUE, productName TEXT, initialPrice INTEGER, productPrice INTEGER, quantity INTEGER, unitTag TEXT, image TEXT)',
+        'CREATE TABLE cart(id INTEGER PRIMARY KEY, productId TEXT, name TEXT, description TEXT, category TEXT, price TEXT, quantity INTEGER, material TEXT, departament TEXT);'
       );
     },
   );

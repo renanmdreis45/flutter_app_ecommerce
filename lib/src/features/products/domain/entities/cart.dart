@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
 class Cart extends Equatable {
-  const Cart({
+  Cart({
     required this.id,
     required this.productId,
     required this.name,
@@ -22,12 +22,12 @@ class Cart extends Equatable {
   final String category;
   final String image;
   final double price;
-  final ValueNotifier<int>? quantity;
+  late final int quantity;
   final String material;
   final String departament;
 
   @override
-  List<Object> get props => [id, productId, name, description, category, image, price, ValueNotifier(quantity), material, departament];
+  List<Object> get props => [id, productId, name, description, category, image, price, quantity, material, departament];
 
   factory Cart.fromMap(Map<String, dynamic> data) {
     return Cart(
@@ -38,7 +38,7 @@ class Cart extends Equatable {
         category: data['categoria'],
         image: data['imagem'],
         price: data['preco'],
-        quantity: ValueNotifier(data['quantity']),
+        quantity: data['quantity'],
         material: data['material'],
         departament: data['departamento']);
   }
@@ -51,7 +51,7 @@ class Cart extends Equatable {
       'description': description,
       'category': category,
       'price': price.toString(),
-      'quantity': quantity?.value,
+      'quantity': quantity,
       'material': material,
       'departament': departament,
     };
@@ -60,7 +60,7 @@ class Cart extends Equatable {
   Map<String, dynamic> quantityMap() {
     return {
       'productId': productId,
-      'quantity': quantity!.value,
+      'quantity': quantity,
     };
   }
 }

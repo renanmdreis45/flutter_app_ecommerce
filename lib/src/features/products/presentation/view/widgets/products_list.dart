@@ -29,12 +29,11 @@ class ProductsList extends StatelessWidget {
             category: products[index].category,
             image: products[index].image,
             price: double.parse(products[index].price),
-            quantity: ValueNotifier(1),
+            quantity: 1,
             material: products[index].material,
             departament: products[index].departament))
-        .then((value) {
-      print(value);
-      cartController.addTotalPrice(int.parse(products[index].price).toDouble());
+        .then((_) {
+      cartController.addTotalPrice(double.parse(products[index].price));
       cartController.addCounter();
       print('Product Added to cart');
     }).onError((error, stackTrace) {

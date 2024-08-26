@@ -69,18 +69,18 @@ class CartController with ChangeNotifier {
 
   void addQuantity(int id) {
     final index = cart.indexWhere((element) => element.id == id);
-    cart[index].quantity!.value = cart[index].quantity!.value + 1;
+    cart[index].quantity = cart[index].quantity + 1;
     _setPrefsItems();
     notifyListeners();
   }
 
   void deleteQuantity(int id) {
     final index = cart.indexWhere((element) => element.id == id);
-    final currentQuantity = cart[index].quantity!.value;
+    final currentQuantity = cart[index].quantity;
     if (currentQuantity <= 1) {
       currentQuantity == 1;
     } else {
-      cart[index].quantity!.value = currentQuantity - 1;
+      cart[index].quantity = currentQuantity - 1;
     }
     _setPrefsItems();
     notifyListeners();
@@ -125,8 +125,15 @@ class CartController with ChangeNotifier {
     return newQuant as int;
   }
 
-  Future<Cart> saveCart(Cart cart) async {
-    final updatedCart = await insertCart(cart);
-    return updatedCart as Cart;
+  Future<void> saveCart(Cart cart) async {
+    final result = await insertCart.call(cart);
+    result.fold(
+      (failure) {
+        print("Falha ao adicionar o produto no carrinho: $failure");
+      },
+      (_) {
+        print(cart);
+      },
+    );
   }
 }

@@ -145,54 +145,49 @@ class _CartScreenState extends State<CartScreen> {
                                     ],
                                   ),
                                 ),
-                                ValueListenableBuilder<int>(
-                                    valueListenable:
-                                        provider.cart[index].quantity!,
-                                    builder: (context, val, child) {
-                                      return PlusMinusButtons(
-                                        addQuantity: () {
-                                          cart.addQuantity(int.parse(
-                                              provider.cart[index].id));
-                                          cart
-                                              .updateCardQuantity(Cart(
-                                                  id: index.toString(),
-                                                  productId: provider
-                                                      .cart[index].productId,
-                                                  name:
-                                                      provider.cart[index].name,
-                                                  description: provider
-                                                      .cart[index].description,
-                                                  category: provider
-                                                      .cart[index].category,
-                                                  image: provider
-                                                      .cart[index].image,
-                                                  price: provider
-                                                      .cart[index].price,
-                                                  quantity: ValueNotifier(
-                                                      provider.cart[index]
-                                                          .quantity!.value),
-                                                  material: provider
-                                                      .cart[index].material,
-                                                  departament: provider
-                                                      .cart[index].departament))
-                                              .then((value) {
-                                            setState(() {
-                                              cart.addTotalPrice(double.parse(
-                                                  provider.cart[index].price
-                                                      .toString()));
-                                            });
-                                          });
-                                        },
-                                        deleteQuantity: () {
-                                          cart.deleteQuantity(int.parse(
-                                              provider.cart[index].id));
-                                          cart.removeTotalPrice(double.parse(
-                                              provider.cart[index].price
-                                                  .toString()));
-                                        },
-                                        text: val.toString(),
-                                      );
-                                    }),
+                                PlusMinusButtons(
+                                  addQuantity: () {
+                                    cart.addQuantity(int.parse(
+                                        provider.cart[index].id));
+                                    cart
+                                        .updateCardQuantity(Cart(
+                                            id: index.toString(),
+                                            productId: provider
+                                                .cart[index].productId,
+                                            name:
+                                                provider.cart[index].name,
+                                            description: provider
+                                                .cart[index].description,
+                                            category: provider
+                                                .cart[index].category,
+                                            image: provider
+                                                .cart[index].image,
+                                            price: provider
+                                                .cart[index].price,
+                                            quantity:
+                                                provider.cart[index]
+                                                    .quantity,
+                                            material: provider
+                                                .cart[index].material,
+                                            departament: provider
+                                                .cart[index].departament))
+                                        .then((value) {
+                                      setState(() {
+                                        cart.addTotalPrice(double.parse(
+                                            provider.cart[index].price
+                                                .toString()));
+                                      });
+                                    });
+                                  },
+                                  deleteQuantity: () {
+                                    cart.deleteQuantity(int.parse(
+                                        provider.cart[index].id));
+                                    cart.removeTotalPrice(double.parse(
+                                        provider.cart[index].price
+                                            .toString()));
+                                  },
+                                  text: provider.cart[index].quantity.toString(),
+                                ),
                                 IconButton(
                                     onPressed: () {
                                       cart.deleteCartItem(
@@ -219,7 +214,7 @@ class _CartScreenState extends State<CartScreen> {
             builder: (BuildContext context, value, Widget? child) {
               final ValueNotifier<double?> totalPrice = ValueNotifier(null);
               for (var element in value.cart) {
-                totalPrice.value = (element.price * element.quantity!.value) +
+                totalPrice.value = (element.price * element.quantity) +
                     (totalPrice.value ?? 0);
               }
               return Column(
