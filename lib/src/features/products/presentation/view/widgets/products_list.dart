@@ -21,18 +21,19 @@ class ProductsList extends StatelessWidget {
 
   void saveData(int index) async {
     await cartController
-        .insertCart(Cart(
+        .saveCart(Cart(
             id: index.toString(),
             productId: products[index].id,
             name: products[index].name,
             description: products[index].description,
             category: products[index].category,
             image: products[index].image,
-            price: int.parse(products[index].price),
+            price: double.parse(products[index].price),
             quantity: ValueNotifier(1),
             material: products[index].material,
             departament: products[index].departament))
         .then((value) {
+      print(value);
       cartController.addTotalPrice(int.parse(products[index].price).toDouble());
       cartController.addCounter();
       print('Product Added to cart');

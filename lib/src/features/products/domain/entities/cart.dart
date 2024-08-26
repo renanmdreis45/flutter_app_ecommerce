@@ -21,7 +21,7 @@ class Cart extends Equatable {
   final String description;
   final String category;
   final String image;
-  final int price;
+  final double price;
   final ValueNotifier<int>? quantity;
   final String material;
   final String departament;
@@ -45,13 +45,12 @@ class Cart extends Equatable {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'id': int.parse(id),
       'productId': productId,
       'name': name,
       'description': description,
       'category': category,
-      'image': image,
-      'price': price,
+      'price': price.toString(),
       'quantity': quantity?.value,
       'material': material,
       'departament': departament,

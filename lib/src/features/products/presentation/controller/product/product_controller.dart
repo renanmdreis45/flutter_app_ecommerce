@@ -24,11 +24,15 @@ class ProductController with ChangeNotifier {
   }
 
   void filterProductsByQuery(String query) {
-    List<Product> newProducts = products!
-        .where((element) => element.name.contains(query.trim()))
-        .toList();
+    if (query == "") {
+      onFetchProducts();
+    } else {
+      List<Product> newProducts = products!
+          .where((element) => element.name.contains(query.trim()))
+          .toList();
 
-    products = newProducts;
+      products = newProducts;
+    }
     notifyListeners();
   }
 }

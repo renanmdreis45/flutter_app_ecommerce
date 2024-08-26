@@ -17,18 +17,16 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   List<bool> tapped = [];
-  var cartController;
 
   @override
   void initState() {
     super.initState();
-    cartController = Provider.of<CartController>(context, listen: false);
-    cartController.getData();
+    Provider.of<CartController>(context, listen: false).getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartController>(context);
+    final cart = Provider.of<CartController>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -219,14 +217,14 @@ class _CartScreenState extends State<CartScreen> {
           ),
           Consumer<CartController>(
             builder: (BuildContext context, value, Widget? child) {
-              final ValueNotifier<int?> totalPrice = ValueNotifier(null);
+              final ValueNotifier<double?> totalPrice = ValueNotifier(null);
               for (var element in value.cart) {
                 totalPrice.value = (element.price * element.quantity!.value) +
                     (totalPrice.value ?? 0);
               }
               return Column(
                 children: [
-                  ValueListenableBuilder<int?>(
+                  ValueListenableBuilder<double?>(
                       valueListenable: totalPrice,
                       builder: (context, val, child) {
                         return ReusableWidget(
