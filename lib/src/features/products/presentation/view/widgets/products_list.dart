@@ -45,100 +45,106 @@ class ProductsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SearchBarWidget(onChange: searchProduct,),
+        SearchBarWidget(
+          onChange: searchProduct,
+        ),
         const SizedBox(
           height: 30,
         ),
-        ListView.builder(
-            padding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-            shrinkWrap: true,
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              print(products[index].image);
-              return Card(
-                color: Colors.blueGrey.shade200,
-                elevation: 5.0,
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      // products[index].image.isNotEmpty ?
-                      // Image(
-                      //   height: 80,
-                      //   width: 80,
-                      //   image: NetworkImage(products[index].image.toString()),
-                      // ) : const SizedBox(),
-                      SizedBox(
-                        width: 130,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 5.0,
-                            ),
-                            RichText(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              text: TextSpan(
-                                  text: 'Name: ',
-                                  style: TextStyle(
-                                      color: Colors.blueGrey.shade800,
-                                      fontSize: 16.0),
-                                  children: [
-                                    TextSpan(
-                                        text:
-                                            '${products[index].name.toString()}\n',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                  ]),
-                            ),
-                            RichText(
-                              maxLines: 1,
-                              text: TextSpan(
-                                  text: 'Description: ',
-                                  style: TextStyle(
-                                      color: Colors.blueGrey.shade800,
-                                      fontSize: 16.0),
-                                  children: [
-                                    TextSpan(
-                                        text:
-                                            '${products[index].description}\n',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                  ]),
-                            ),
-                            RichText(
-                              maxLines: 1,
-                              text: TextSpan(
-                                  text: 'Price: ' r"$",
-                                  style: TextStyle(
-                                      color: Colors.blueGrey.shade800,
-                                      fontSize: 16.0),
-                                  children: [
-                                    TextSpan(
-                                        text: '${products[index].price}\n',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                  ]),
-                            ),
-                          ],
+        Expanded(
+          child: ListView.builder(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                print(products[index].image);
+                return Card(
+                  color: Colors.blueGrey.shade200,
+                  elevation: 5.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        // products[index].image.isNotEmpty ?
+                        // Image(
+                        //   height: 80,
+                        //   width: 80,
+                        //   image: NetworkImage(products[index].image.toString()),
+                        // ) : const SizedBox(),
+                        SizedBox(
+                          width: 130,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 5.0,
+                              ),
+                              RichText(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                text: TextSpan(
+                                    text: 'Name: ',
+                                    style: TextStyle(
+                                        color: Colors.blueGrey.shade800,
+                                        fontSize: 16.0),
+                                    children: [
+                                      TextSpan(
+                                          text:
+                                              '${products[index].name.toString()}\n',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ]),
+                              ),
+                              RichText(
+                                maxLines: 1,
+                                text: TextSpan(
+                                    text: 'Description: ',
+                                    style: TextStyle(
+                                        color: Colors.blueGrey.shade800,
+                                        fontSize: 16.0),
+                                    children: [
+                                      TextSpan(
+                                          text:
+                                              '${products[index].description}\n',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ]),
+                              ),
+                              RichText(
+                                maxLines: 1,
+                                text: TextSpan(
+                                    text: 'Price: ' r"$",
+                                    style: TextStyle(
+                                        color: Colors.blueGrey.shade800,
+                                        fontSize: 16.0),
+                                    children: [
+                                      TextSpan(
+                                          text: '${products[index].price}\n',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ]),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.blueGrey.shade900),
-                          onPressed: () {
-                            saveData(index);
-                          },
-                          child: const Text('Add to Cart')),
-                    ],
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.blueGrey.shade900),
+                            onPressed: () {
+                              saveData(index);
+                            },
+                            child: const Text('Add to Cart')),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
+        ),
       ],
     );
   }

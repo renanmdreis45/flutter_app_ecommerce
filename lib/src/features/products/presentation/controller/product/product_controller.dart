@@ -18,9 +18,9 @@ class ProductController with ChangeNotifier {
       },
       (productList) {
         products = productList;
-        notifyListeners();
       },
     );
+    notifyListeners();
   }
 
   void filterProductsByQuery(String query) {
