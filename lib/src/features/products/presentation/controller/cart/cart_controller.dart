@@ -74,14 +74,15 @@ class CartController with ChangeNotifier {
   }
 
   void addQuantity(int id) {
-    final index = cart.indexWhere((element) => element.id == id);
+    final index = cart.indexWhere((element) => int.parse(element.id) == id);
+    print(cart[index].quantity);
     cart[index].quantity = cart[index].quantity + 1;
     _setPrefsItems();
     notifyListeners();
   }
 
   void deleteQuantity(int id) {
-    final index = cart.indexWhere((element) => element.id == id);
+    final index = cart.indexWhere((element) => int.parse(element.id) == id);
     final currentQuantity = cart[index].quantity;
     if (currentQuantity <= 1) {
       currentQuantity == 1;
@@ -93,7 +94,7 @@ class CartController with ChangeNotifier {
   }
 
   void removeItem(int id) {
-    final index = cart.indexWhere((element) => element.id == id);
+    final index = cart.indexWhere((element) => int.parse(element.id) == id);
     cart.removeAt(index);
     _setPrefsItems();
     notifyListeners();

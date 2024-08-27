@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_ecommerce/core/res/colours.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/entities/cart.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/cart/cart_controller.dart';
+import 'package:flutter_app_ecommerce/src/features/products/presentation/view/screens/products_screen/products_screen.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
@@ -10,7 +11,7 @@ class CartScreen extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-    static const routeName = '/cart';
+  static const routeName = '/cart';
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -30,6 +31,11 @@ class _CartScreenState extends State<CartScreen> {
     final cart = Provider.of<CartController>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, ProductsScreen.routeName);
+            },
+            icon: const Icon(Icons.arrow_back)),
         centerTitle: true,
         title: const Text('Ecommerce'),
         actions: [
@@ -72,7 +78,7 @@ class _CartScreenState extends State<CartScreen> {
                       itemCount: provider.cart.length,
                       itemBuilder: (context, index) {
                         return Card(
-                          color: Colors.blueGrey.shade200,
+                          color: Colours.primaryColour,
                           elevation: 5.0,
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -86,7 +92,7 @@ class _CartScreenState extends State<CartScreen> {
                                 //   image: AssetImage(provider.cart[index].image),
                                 // ),
                                 SizedBox(
-                                  width: 130,
+                                  width: 200,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -100,7 +106,7 @@ class _CartScreenState extends State<CartScreen> {
                                         text: TextSpan(
                                             text: 'Name: ',
                                             style: TextStyle(
-                                                color: Colors.blueGrey.shade800,
+                                                color: Colors.white,
                                                 fontSize: 16.0),
                                             children: [
                                               TextSpan(
@@ -108,15 +114,17 @@ class _CartScreenState extends State<CartScreen> {
                                                       '${provider.cart[index].name}\n',
                                                   style: const TextStyle(
                                                       fontWeight:
-                                                          FontWeight.bold)),
+                                                          FontWeight.w500)),
                                             ]),
                                       ),
+                                      SizedBox(height: 4,),
                                       RichText(
-                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
                                         text: TextSpan(
-                                            text: 'Unit: ',
+                                            text: 'Description: ',
                                             style: TextStyle(
-                                                color: Colors.blueGrey.shade800,
+                                                color: Colors.white,
                                                 fontSize: 16.0),
                                             children: [
                                               TextSpan(
@@ -124,15 +132,16 @@ class _CartScreenState extends State<CartScreen> {
                                                       '${provider.cart[index].description}\n',
                                                   style: const TextStyle(
                                                       fontWeight:
-                                                          FontWeight.bold)),
+                                                          FontWeight.w500)),
                                             ]),
                                       ),
+                                      SizedBox(height: 4,),
                                       RichText(
                                         maxLines: 1,
                                         text: TextSpan(
                                             text: 'Price: ' r"$",
                                             style: TextStyle(
-                                                color: Colors.blueGrey.shade800,
+                                                color: Colors.white,
                                                 fontSize: 16.0),
                                             children: [
                                               TextSpan(
@@ -140,7 +149,7 @@ class _CartScreenState extends State<CartScreen> {
                                                       '${provider.cart[index].price}\n',
                                                   style: const TextStyle(
                                                       fontWeight:
-                                                          FontWeight.bold)),
+                                                          FontWeight.w500)),
                                             ]),
                                       ),
                                     ],
@@ -148,46 +157,42 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                                 PlusMinusButtons(
                                   addQuantity: () {
-                                    cart.addQuantity(int.parse(
-                                        provider.cart[index].id));
+                                    cart.addQuantity(
+                                        int.parse(provider.cart[index].id));
                                     cart
                                         .updateCardQuantity(Cart(
                                             id: index.toString(),
-                                            productId: provider
-                                                .cart[index].productId,
-                                            name:
-                                                provider.cart[index].name,
+                                            productId:
+                                                provider.cart[index].productId,
+                                            name: provider.cart[index].name,
                                             description: provider
                                                 .cart[index].description,
-                                            category: provider
-                                                .cart[index].category,
-                                            image: provider
-                                                .cart[index].image,
-                                            price: provider
-                                                .cart[index].price,
+                                            category:
+                                                provider.cart[index].category,
+                                            image: provider.cart[index].image,
+                                            price: provider.cart[index].price,
                                             quantity:
-                                                provider.cart[index]
-                                                    .quantity,
-                                            material: provider
-                                                .cart[index].material,
+                                                provider.cart[index].quantity,
+                                            material:
+                                                provider.cart[index].material,
                                             departament: provider
                                                 .cart[index].departament))
                                         .then((value) {
                                       setState(() {
-                                        cart.addTotalPrice(double.parse(
-                                            provider.cart[index].price
-                                                .toString()));
+                                        cart.addTotalPrice(double.parse(provider
+                                            .cart[index].price
+                                            .toString()));
                                       });
                                     });
                                   },
                                   deleteQuantity: () {
-                                    cart.deleteQuantity(int.parse(
-                                        provider.cart[index].id));
+                                    cart.deleteQuantity(
+                                        int.parse(provider.cart[index].id));
                                     cart.removeTotalPrice(double.parse(
-                                        provider.cart[index].price
-                                            .toString()));
+                                        provider.cart[index].price.toString()));
                                   },
-                                  text: provider.cart[index].quantity.toString(),
+                                  text:
+                                      provider.cart[index].quantity.toString(),
                                 ),
                                 IconButton(
                                     onPressed: () {
@@ -250,6 +255,7 @@ class _CartScreenState extends State<CartScreen> {
             'Buy',
             style: TextStyle(
               fontSize: 18.0,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -274,9 +280,9 @@ class PlusMinusButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(onPressed: deleteQuantity, icon: const Icon(Icons.remove)),
-        Text(text),
-        IconButton(onPressed: addQuantity, icon: const Icon(Icons.add)),
+        IconButton(onPressed: deleteQuantity, icon: const Icon(Icons.remove, color: Colors.white,)),
+        Text(text, style: const TextStyle(color: Colors.white),),
+        IconButton(onPressed: addQuantity, icon: const Icon(Icons.add, color: Colors.white,)),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_ecommerce/core/res/colours.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/entities/cart.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/entities/product.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/cart/cart_controller.dart';
@@ -62,7 +63,7 @@ class ProductsList extends StatelessWidget {
               itemBuilder: (context, index) {
                 print(products[index].image);
                 return Card(
-                  color: Colors.blueGrey.shade200,
+                  color: Colours.primaryColour,
                   elevation: 5.0,
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
@@ -77,7 +78,7 @@ class ProductsList extends StatelessWidget {
                         //   image: NetworkImage(products[index].image.toString()),
                         // ) : const SizedBox(),
                         SizedBox(
-                          width: 130,
+                          width: 200,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -90,43 +91,47 @@ class ProductsList extends StatelessWidget {
                                 text: TextSpan(
                                     text: 'Name: ',
                                     style: TextStyle(
-                                        color: Colors.blueGrey.shade800,
+                                        color: Colors.white,
                                         fontSize: 16.0),
                                     children: [
                                       TextSpan(
                                           text:
                                               '${products[index].name.toString()}\n',
                                           style: const TextStyle(
-                                              fontWeight: FontWeight.bold)),
+                                              fontWeight: FontWeight.w500)),
                                     ]),
                               ),
+                              SizedBox(height: 4,),
                               RichText(
-                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 4,
                                 text: TextSpan(
                                     text: 'Description: ',
                                     style: TextStyle(
-                                        color: Colors.blueGrey.shade800,
+                                        color: Colors.white,
                                         fontSize: 16.0),
                                     children: [
                                       TextSpan(
                                           text:
                                               '${products[index].description}\n',
                                           style: const TextStyle(
-                                              fontWeight: FontWeight.bold)),
+                                              fontWeight: FontWeight.w500)),
                                     ]),
                               ),
+                              SizedBox(height: 4,),
                               RichText(
+                                overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 text: TextSpan(
                                     text: 'Price: ' r"$",
                                     style: TextStyle(
-                                        color: Colors.blueGrey.shade800,
+                                        color: Colors.white,
                                         fontSize: 16.0),
                                     children: [
                                       TextSpan(
                                           text: '${products[index].price}\n',
                                           style: const TextStyle(
-                                              fontWeight: FontWeight.bold)),
+                                              fontWeight: FontWeight.w500)),
                                     ]),
                               ),
                             ],

@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
 class Cart extends Equatable {
   Cart({
@@ -22,7 +21,7 @@ class Cart extends Equatable {
   final String category;
   final String image;
   final double price;
-  late final int quantity;
+  int quantity;
   final String material;
   final String departament;
 

@@ -36,7 +36,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Product List'),
+        title: const Text('Products'),
         actions: [
           badges.Badge(
             badgeContent: Consumer<CartController>(
