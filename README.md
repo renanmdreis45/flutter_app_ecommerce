@@ -86,5 +86,5 @@ npm start
 
 # Melhorias futuras
   
-  Pretendo adicionar a funcionalidade de logout, filtrar o carrinho de produtos para cada usuário, fazer uma tela de detalhes de cada produto e uma tela com a listagem de compras de cada usuário.
+  Pretendo adicionar a funcionalidade de logout, filtrar o carrinho de produtos para cada usuário, fazer uma tela de detalhes de cada produto e uma tela com a listagem de compras de cada usuário. Além de melhorias no design da aplicação, que está minimalista.
 
