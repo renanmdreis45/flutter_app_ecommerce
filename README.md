@@ -80,8 +80,6 @@ npm install
 npm start
 ```
 
-- Acessar a aplicação
-
 # Rodando a aplicação
 
 
