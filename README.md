@@ -7,8 +7,6 @@ Repositório referente a um ecommerce feito com flutter e node para o desafio t�
   
   Optei por uma arquitetura Clean Code para o front da aplicação, pois estar mais habituado com esse tipo de arquitetura e considero essencial para tornar o código mais legível, mais fácil de ser mantido e mais compreensível, além de facilitar a implementação de testes em cada funcionalidade do sistema pelo fato de isolar a aplicação em diferentes camadas.
   
-  ![Alt text](images/clean_code.jpeg)
-
   Há basicamente quatro camadas:
 
   Data Layer: Camada responsável pelo recebimento de dados de várias fontes, sejam elas remotas, como uma API remota, ou locais, como um banco de dados local. Nessa camada, é inserida a implementação do repositório e de serviços que se comunicam com as fontes de dados.
