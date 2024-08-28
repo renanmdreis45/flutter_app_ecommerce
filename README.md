@@ -68,7 +68,9 @@ flutter run
 Utilizei um emulador do Android Studio para buildar e exibir a aplicação
 ```
 
-  Para o Backend, basta executar npm install seguido com npm start. Antes é preciso configurar um novo banco de dados Postgresql, usando as informações do datasource. São elas: host (localhost), database (postgres), user(postgres), password(postgres) e port (5432). Isso pode ser feito adicionando-se um novor server no PgAdmin. Como syncr
+  Para o Backend, basta executar npm install seguido com npm start. Antes é preciso configurar um novo banco de dados Postgresql, usando as informações do datasource. São elas: host (localhost), database (postgres), user(postgres), password(postgres) e port (5432). Isso pode ser feito adicionando-se um novor server no PgAdmin. Como synchronize:true,
+  haverá a sincronização entre mudanças nas entidades e modificações no banco de dados. Logo, as tabelas serão geradas automaticamente após configuração do banco e ao rodar o comando npm start.
+
 
 ```
 npm install
@@ -89,4 +91,4 @@ npm start
 # Melhorias futuras
   
   Pretendo adicionar a funcionalidade de logout, filtrar o carrinho de produtos para cada usuário, fazer uma tela de detalhes de cada produto e uma tela com a listagem de compras de cada usuário.
-  
+
