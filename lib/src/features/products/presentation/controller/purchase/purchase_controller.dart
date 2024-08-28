@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/entities/purchase.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/purchase/buy_product.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/purchase/get_purchase_list.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PurchaseController with ChangeNotifier {
   final GetPurchaseList getPurchaseList;
@@ -24,8 +28,14 @@ class PurchaseController with ChangeNotifier {
       String price,
       int quantity,
       String material,
-      String departament) async {
-    final result = await buyProduct(BuyProductParams(
+      String department) async {
+    final sl = GetIt.instance;
+
+    final prefs = sl<SharedPreferences>();
+
+    final user = prefs.getString("user")!;
+   
+    final result = await buyProduct.call(BuyProductParams(
         productId: productId,
         name: name,
         description: description,
@@ -33,7 +43,8 @@ class PurchaseController with ChangeNotifier {
         price: price,
         quantity: quantity,
         material: material,
-        departament: departament));
+        department: department,
+        username: user));
 
     result.fold((failure) {
       errorMessage = failure.message;
@@ -41,7 +52,7 @@ class PurchaseController with ChangeNotifier {
       print("The purchase was finished successfully!");
     });
 
-    Future.delayed(Duration.zero, () => notifyListeners());
+    notifyListeners();
   }
 
   Future<List<Purchase>> getPurchases() async {

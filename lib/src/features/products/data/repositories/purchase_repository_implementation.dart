@@ -21,9 +21,11 @@ class PurchaseRepositoryImplementation implements PurchaseRepository {
     required String price,
     required int quantity,
     required String material,
-    required String departament,
+    required String department,
+    required String username,
   }) async {
     try {
+
       await _remoteDataSource.buyProduct(
           productId: productId,
           name: name,
@@ -32,7 +34,8 @@ class PurchaseRepositoryImplementation implements PurchaseRepository {
           price: price,
           quantity: quantity,
           material: material,
-          departament: departament);
+          department: department,
+          username: username);
 
       return const Right(null);
     } on APIException catch (e) {

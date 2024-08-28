@@ -8,6 +8,7 @@ import 'package:flutter_app_ecommerce/src/features/auth/presentation/view/screen
 import 'package:flutter_app_ecommerce/src/features/auth/presentation/view/screens/sign_up_screen.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/cart/cart_controller.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/product/product_controller.dart';
+import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/purchase/purchase_controller.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/view/screens/cart_screen/cart_screen.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/view/screens/products_screen/products_screen.dart';
 import 'package:provider/provider.dart';
@@ -19,19 +20,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
   switch (settings.name) {
     case '/':
-      // final prefs = sl<SharedPreferences>();
+      final prefs = sl<SharedPreferences>();
       return _pageBuilder(
         (context) {
-          // if (prefs.getBool("isLogged")  != true) {
-          //   final userPref = sl<SharedPreferences>().getString("user");
-          //   if (userPref != null && userPref.isNotEmpty) {
-          //     try {
-          //       print(userPref);
-          //       final userMap = jsonDecode(userPref);
-          //       context.userProvider.initUser(userMap);
-          //     } catch (e) {
-          //       print('Error decoding user JSON: $e');
-          //     }
+          if (prefs.getBool("isLogged")  == true) {
+            final userPref = sl<SharedPreferences>().getString("user");
+            if (userPref != null && userPref.isNotEmpty) {
+              try {
+                print(userPref);
+                final userMap = jsonDecode(userPref);
+                context.userProvider.initUser(userMap);
+              } catch (e) {
+                print('Error decoding user JSON: $e');
+              }
               return MultiProvider(
                 providers: [
                   ChangeNotifierProvider(
@@ -41,12 +42,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 ],
                child: const ProductsScreen(),
               );
-            // }
-          // } 
-          // return ChangeNotifierProvider(
-          //   create: (_) => sl<AuthController>(),
-          //   child: const LoginScreen(),
-          // );
+            }
+          } 
+          return ChangeNotifierProvider(
+            create: (_) => sl<AuthController>(),
+            child: const LoginScreen(),
+          );
         },
         settings: settings,
       );
@@ -78,9 +79,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           settings: settings);
     case CartScreen.routeName:
       return _pageBuilder(
-          (_) => ChangeNotifierProvider(create: (_) => sl<CartController>(),
-                child: const CartScreen(),
-              ),
+          (_) => MultiProvider(providers: 
+          [
+            ChangeNotifierProvider(create: (_) => sl<CartController>()),
+            ChangeNotifierProvider(create: (_) => sl<PurchaseController>()),
+          ],
+          child: const CartScreen(),
+          ),
           settings: settings);
     default:
       return _pageBuilder(

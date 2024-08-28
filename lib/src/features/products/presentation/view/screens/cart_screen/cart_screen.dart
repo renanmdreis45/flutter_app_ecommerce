@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_ecommerce/core/res/colours.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/entities/cart.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/cart/cart_controller.dart';
+import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/purchase/purchase_controller.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/view/screens/products_screen/products_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -23,12 +24,14 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CartController>(context, listen: false).getData();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Provider.of<CartController>(context, listen: false).getData();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartController>(context, listen: true);
+    final cart = Provider.of<CartController>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -117,7 +120,9 @@ class _CartScreenState extends State<CartScreen> {
                                                           FontWeight.w500)),
                                             ]),
                                       ),
-                                      SizedBox(height: 4,),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
                                       RichText(
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 3,
@@ -135,7 +140,9 @@ class _CartScreenState extends State<CartScreen> {
                                                           FontWeight.w500)),
                                             ]),
                                       ),
-                                      SizedBox(height: 4,),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
                                       RichText(
                                         maxLines: 1,
                                         text: TextSpan(
@@ -240,6 +247,26 @@ class _CartScreenState extends State<CartScreen> {
       ),
       bottomNavigationBar: InkWell(
         onTap: () {
+          for (var i = 0;
+              i <
+                  Provider.of<CartController>(context, listen: false)
+                      .cart
+                      .length;
+              i++) {
+            Cart item =
+                Provider.of<CartController>(context, listen: false).cart[i];
+            
+            Provider.of<PurchaseController>(context, listen: false)
+                .buyNewProduct(
+                    item.productId,
+                    item.name,
+                    item.description,
+                    item.category,
+                    item.price.toString(),
+                    item.quantity,
+                    item.material,
+                    item.departament);
+          }
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Payment Successful!'),
@@ -280,9 +307,22 @@ class PlusMinusButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(onPressed: deleteQuantity, icon: const Icon(Icons.remove, color: Colors.white,)),
-        Text(text, style: const TextStyle(color: Colors.white),),
-        IconButton(onPressed: addQuantity, icon: const Icon(Icons.add, color: Colors.white,)),
+        IconButton(
+            onPressed: deleteQuantity,
+            icon: const Icon(
+              Icons.remove,
+              color: Colors.white,
+            )),
+        Text(
+          text,
+          style: const TextStyle(color: Colors.white),
+        ),
+        IconButton(
+            onPressed: addQuantity,
+            icon: const Icon(
+              Icons.add,
+              color: Colors.white,
+            )),
       ],
     );
   }
@@ -301,9 +341,11 @@ class ReusableWidget extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
           ),
-          Text(value.toString(), style: TextStyle(color: Colors.white)),
+          Text(value.toString(),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.w500)),
         ],
       ),
     );

@@ -23,21 +23,24 @@ void main() {
       APIException(message: 'Unknown Error Occurred', statusCode: 500);
 
   group('createUser', () {
-    const createdAt = 'whatever.createdAt';
+    const email = 'whatever.email';
     const name = 'whatever.name';
+    const password = 'whatever.password';
     test(
       'should call the [RemoteDataSource.createUser] and complete succesfully when the call to the remote source is succesfully',
       () async {
         when(() => remoteDataSource.createUser(
-            createdAt: any(named: 'createdAt'),
-            name: any(named: 'name'))).thenAnswer((_) async => Future.value());
+                email: any(named: 'email'),
+                name: any(named: 'name'),
+                password: any(named: 'password')))
+            .thenAnswer((_) async => Future.value());
 
         final result =
-            await repoImpl.createUser(createdAt: createdAt, name: name);
+            await repoImpl.createUser(email: email, name: name, password: password);
 
         expect(result, equals(const Right(null)));
         verify(() =>
-                remoteDataSource.createUser(createdAt: createdAt, name: name))
+                remoteDataSource.createUser(email: email, name: name, password: password))
             .called(1);
         verifyNoMoreInteractions(remoteDataSource);
       },
@@ -47,11 +50,13 @@ void main() {
         'should return a [ServerFailure] when the call to the remote'
         'source is unsuccesful', () async {
       when(() => remoteDataSource.createUser(
-          createdAt: any(named: 'createdAt'),
-          name: any(named: 'name'))).thenThrow(tException);
+            email: any(named: 'email'),
+            name: any(named: 'name'),
+            password: any(named: 'password'),
+          )).thenThrow(tException);
 
-      final result =
-          await repoImpl.createUser(createdAt: createdAt, name: name);
+      final result = await repoImpl.createUser(
+          email: email, name: name, password: password);
 
       expect(
           result,
@@ -60,7 +65,7 @@ void main() {
               statusCode: tException.statusCode))));
 
       verify(() =>
-              remoteDataSource.createUser(createdAt: createdAt, name: name))
+              remoteDataSource.createUser(email: email, name: name, password: password))
           .called(1);
 
       verifyNoMoreInteractions(remoteDataSource);

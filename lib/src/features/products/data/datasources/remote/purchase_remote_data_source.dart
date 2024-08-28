@@ -16,7 +16,8 @@ abstract class PurchaseRemoteDataSource {
     required String price,
     required int quantity,
     required String material,
-    required String departament,
+    required String department,
+    required String username,
   });
   Future<List<Purchase>> getPurchases();
 }
@@ -38,20 +39,25 @@ class PurchaseRemoteDataSourceImpl implements PurchaseRemoteDataSource {
     required String price,
     required int quantity,
     required String material,
-    required String departament,
+    required String department,
+    required String username,
   }) async {
     try {
+      final url = '$kBaseApiUrl$kCreatePurchaseEndpoint';
+
       final response =
-          await _client.post(Uri.parse('$kBaseApiUrl$kCreatePurchaseEndpoint'),
-              body: jsonEncode({
-                'id': productId,
+          await _client.post(Uri.parse(url),
+              headers: {"Content-Type": "application/json"},
+              body: jsonEncode(<String, dynamic>{
+                'productId': productId,
                 'name': name,
                 'description': description,
                 'category': category,
                 'price': price,
                 'quantity': quantity,
                 'material': material,
-                'departament': departament,
+                'department': department,
+                'userName': username,
               }));
 
       print('Compra realizada: $response');
@@ -67,12 +73,11 @@ class PurchaseRemoteDataSourceImpl implements PurchaseRemoteDataSource {
     }
   }
 
-
   @override
   Future<List<PurchaseModel>> getPurchases() async {
     final response =
         await _client.get(Uri.http(kBaseApiUrl, kGetPurchasesEndpoint));
-    
+
     return List<DataMap>.from(jsonDecode(response.body))
         .map((userData) => PurchaseModel.fromMap(userData))
         .toList();

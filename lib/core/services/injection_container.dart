@@ -8,18 +8,24 @@ import 'package:flutter_app_ecommerce/src/features/auth/domain/usecases/sign_in.
 import 'package:flutter_app_ecommerce/src/features/auth/presentation/controller/auth_controller.dart';
 import 'package:flutter_app_ecommerce/src/features/products/data/datasources/local/cart_local_data_source.dart';
 import 'package:flutter_app_ecommerce/src/features/products/data/datasources/remote/product_remote_data_source.dart';
+import 'package:flutter_app_ecommerce/src/features/products/data/datasources/remote/purchase_remote_data_source.dart';
 import 'package:flutter_app_ecommerce/src/features/products/data/repositories/cart_repository_implementation.dart';
 import 'package:flutter_app_ecommerce/src/features/products/data/repositories/product_repository_implementation.dart';
+import 'package:flutter_app_ecommerce/src/features/products/data/repositories/purchase_repository_implementation.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/repositories/cart_repository.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/repositories/product_repository.dart';
+import 'package:flutter_app_ecommerce/src/features/products/domain/repositories/purchase_repository.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/cart/delete_cart_item.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/cart/get_cart_list.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/cart/insert_cart.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/cart/update_quantity.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/product/get_product_by_id.dart';
 import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/product/get_products.dart';
+import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/purchase/buy_product.dart';
+import 'package:flutter_app_ecommerce/src/features/products/domain/usecases/purchase/get_purchase_list.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/cart/cart_controller.dart';
 import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/product/product_controller.dart';
+import 'package:flutter_app_ecommerce/src/features/products/presentation/controller/purchase/purchase_controller.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,7 +55,8 @@ Future<void> initDependencies() async {
     ..registerLazySingleton(() => GetProducts(sl()))
     ..registerLazySingleton<ProductRepository>(
         () => ProductRepositoryImplementation(sl()))
-    ..registerLazySingleton<ProductRemoteDataSource>(() => ProductRemoteDataSourceImpl(sl()));
+    ..registerLazySingleton<ProductRemoteDataSource>(
+        () => ProductRemoteDataSourceImpl(sl()));
 
   sl
     ..registerFactory(() => CartController(
@@ -66,4 +73,14 @@ Future<void> initDependencies() async {
     ..registerLazySingleton<CartLocalDataSource>(
         () => CartLocalDataSourceImpl(sl()))
     ..registerLazySingleton(() => database);
+
+  sl
+    ..registerFactory(
+        () => PurchaseController(getPurchaseList: sl(), buyProduct: sl()))
+    ..registerLazySingleton(() => BuyProduct(sl()))
+    ..registerLazySingleton(() => GetPurchaseList(sl()))
+    ..registerLazySingleton<PurchaseRepository>(
+        () => PurchaseRepositoryImplementation(sl()))
+    ..registerLazySingleton<PurchaseRemoteDataSource>(
+        () => PurchaseRemoteDataSourceImpl(sl()));
 }

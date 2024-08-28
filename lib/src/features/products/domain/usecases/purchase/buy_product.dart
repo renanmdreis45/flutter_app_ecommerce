@@ -17,7 +17,8 @@ class BuyProduct extends UsecaseWithParams<void, BuyProductParams> {
       price: params.price,
       quantity: params.quantity,
       material: params.material,
-      departament: params.departament);
+      department: params.department,
+      username: params.username);
 }
 
 class BuyProductParams extends Equatable {
@@ -29,7 +30,8 @@ class BuyProductParams extends Equatable {
       required this.price,
       required this.quantity,
       required this.material,
-      required this.departament});
+      required this.department,
+      required this.username});
 
   final String productId;
   final String name;
@@ -38,7 +40,8 @@ class BuyProductParams extends Equatable {
   final String price;
   final int quantity;
   final String material;
-  final String departament;
+  final String department;
+  final String username;
 
   @override
   List<Object> get props => [
@@ -49,6 +52,7 @@ class BuyProductParams extends Equatable {
         price,
         quantity,
         material,
-        departament
+        department,
+        username,
       ];
 }

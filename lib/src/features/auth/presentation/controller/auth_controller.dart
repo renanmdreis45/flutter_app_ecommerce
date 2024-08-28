@@ -29,7 +29,7 @@ class AuthController extends ChangeNotifier {
 
   Future<void> signInHandler(String email, String password) async {
     final result = await signIn(SignInParams(email: email, password: password));
-    
+
     result.fold((failure) {
       errorMessage = failure.message;
     }, (user) async {
@@ -37,7 +37,7 @@ class AuthController extends ChangeNotifier {
       signUp = false;
       currentUser = user;
 
-      await prefs.setString("user", user);
+      await prefs.setString("user", user.name);
       await prefs.setBool('isLogged', true);
     });
 

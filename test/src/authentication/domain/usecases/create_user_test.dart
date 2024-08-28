@@ -15,21 +15,21 @@ void main() {
     usecase = CreateUser(repository);
   });
 
-  const params = const CreateUserParams.empty();
+  const params = CreateUserParams.empty();
 
   test('should call the [AuthRepo.createUser]', () async {
 
     when(
-      () => repository.createUser(createdAt: any(named: 'createdAt'), name: any(named: 'name')),
+      () => repository.createUser(email: any(named: 'email'), name: any(named: 'name'), password: any(named: 'password')),
     ).thenAnswer((_) async => const Right(null));
 
-    final result = usecase(params);
+    final result = await usecase(params);
 
     expect(result, equals(const Right<dynamic, void>(null)));
 
     verify(
       () =>
-          repository.createUser(createdAt: params.createdAt, name: params.name),
+          repository.createUser(name: params.name, email: params.email, password: params.password),
     ).called(1);
 
     verifyNoMoreInteractions(repository);
